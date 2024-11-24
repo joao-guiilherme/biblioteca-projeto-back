@@ -26,9 +26,7 @@ class LoginView(APIView):
 
 @api_view(['GET'])
 def livros_favoritos_view(request):
-    """
-    View para retornar os livros favoritos do usuário autenticado.
-    """
+  
     user = request.user  # Obtém o usuário autenticado
     if not user.is_authenticated:
         return Response({'status': 'error', 'message': 'Usuário não autenticado.'}, status=401)
