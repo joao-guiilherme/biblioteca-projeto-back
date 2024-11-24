@@ -1,13 +1,7 @@
-from django.contrib.auth.backends import BaseBackend
-from .models import User
 
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.hashers import check_password
-from .models import User  # Importando o modelo de usuário
-
-from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.hashers import check_password
-from .models import User
+from .models import User 
 
 class EmailBackend(BaseBackend):
 

@@ -11,7 +11,7 @@ class LoginSerializer(serializers.Serializer):
         email_us = data.get('email_us')
         password_user = data.get('password_user')
 
-        # Usar o backend de autenticação para verificar se o usuário existe
+        
         user = authenticate(request=self.context.get('request'), email=email_us, password=password_user)
 
         if not user:
