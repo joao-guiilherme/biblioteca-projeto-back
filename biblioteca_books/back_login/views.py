@@ -7,16 +7,27 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import LoginSerializer
 from .models import Books
 
+from django.contrib.auth import authenticate, login
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import User
+
 class LoginView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email_us')
         password = request.data.get('password_user')
 
-        # autentica o usuário
-        user = authenticate(request=request, username=email, password=password)
+        # Tenta autenticar o usuário com o email e senha fornecidos
+        user = authenticate(request, email=email, password=password)
 
-        if user is None:
-            return Response({'detail': 'Usuário ou senha incorretos'}, status=status.HTTP_400_BAD_REQUEST)
+        if user is not None:
+            # Se a autenticação for bem-sucedida, faz o login do usuário
+            login(request, user)
+            return Response({'status': 'success', 'message': 'Login bem-sucedido!'}, status=status.HTTP_200_OK)
+        else:
+            # Caso contrário, envia uma mensagem de erro
+            return Response({'status': 'error', 'message': 'Usuário ou senha incorretos.'}, status=status.HTTP_401_UNAUTHORIZED)
 
         # gera tokens JWT
         refresh = RefreshToken.for_user(user)
@@ -31,17 +42,31 @@ class LoginView(APIView):
             'livros_favoritos': livros_favoritos
         }, status=status.HTTP_200_OK)
 
-    def get_user_books(self, user):
-        # pega os livros favoritos do usuario
-        livros_favoritos = user.livros_favoritos.all()
-        return [
-            {
-                'id_books': book.id_books,
-                'nome_livro': book.nome_livro,
-                'nome_autor': book.nome_autor,
-            }
-            for book in livros_favoritos
-        ]
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import User
+
+@api_view(['GET'])
+def livros_favoritos_view(request):
+    """
+    View para retornar os livros favoritos do usuário autenticado.
+    """
+    user = request.user  # Obtém o usuário autenticado
+    if not user.is_authenticated:
+        return Response({'status': 'error', 'message': 'Usuário não autenticado.'}, status=401)
+
+    # Obter os livros favoritos do usuário
+    livros_favoritos = user.livros_favoritos.all()
+    livros = [
+        {
+            'id_books': books.id_books,
+            'nome_livro': books.nome_livro,
+            'nome_autor': books.nome_autor,
+        }
+        for books in livros_favoritos
+    ]
+    return Response({'status': 'success', 'livros': Books}, status=200)
 
 
 def login_view(request):

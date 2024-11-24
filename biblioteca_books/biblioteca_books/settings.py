@@ -38,6 +38,10 @@ TEMPLATES = [
 
 # Application definition
 
+AUTHENTICATION_BACKENDS = [
+    'back_login.authbackends.EmailBackend',  # Backend personalizado
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,9 +56,9 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAUTL_AUTHENTICATION_CLASSES':(
-        'rest_framework_simplejwt.authetication.JWTAuthetication',
-    ),
+'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+),
 }
 
 MIDDLEWARE = [
@@ -138,6 +142,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+
+# O diretório onde os arquivos estáticos coletados serão armazenados
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Para a raiz do projeto
+
 
 
 # Default primary key field type

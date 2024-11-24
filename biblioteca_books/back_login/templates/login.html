@@ -6,7 +6,9 @@
     <title>Biblioteca - Login e Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
     {% load static %}
-    <link rel="stylesheet" href="{% static '/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}?v=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -33,13 +35,77 @@
             </div>
         </div>
 
-        
-        <div id="livrosFavoritos" class="row mt-4" style="display: none;">
-            <div class="col-md-6 mx-auto">
-                <h3>Livros Favoritos</h3>
-                <ul id="livrosFavoritosList" class="list-group"></ul>
-            </div>
-        </div>
-        </div>
+
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // Função para enviar o formulário de login via AJAX
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault(); // Impede o envio normal do formulário
+                
+                var email = $('#email_us').val();
+                var senha = $('#password_user').val();
+    
+                // Verifica se os campos não estão vazios
+                if (email === '' || senha === '') {
+                    $('#loginMessage').html('<div class="alert alert-danger">Por favor, preencha todos os campos.</div>');
+                    return;
+                }
+    
+                // Envia os dados do login via AJAX
+                $.ajax({
+                    url: '{% url "login-api" %}', // Substitua com o URL da sua view de login
+                    method: 'POST',
+                    data: {
+    email_us: email,  // Variável correta
+    password_user: senha,  // Variável correta
+    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+},
+
+                    success: function(response) {
+                        // Verifica se o login foi bem-sucedido
+                        if (response.status === 'success') {
+                            $('#loginMessage').html('<div class="alert alert-success">Login bem-sucedido!</div>');
+                            $('#livrosFavoritos').show(); // Exibe os livros favoritos
+                            carregarLivrosFavoritos(); // Carrega a lista de livros favoritos
+                        } else {
+                            $('#loginMessage').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+                    },
+                    error: function() {
+                        $('#loginMessage').html('<div class="alert alert-danger">Ocorreu um erro. Tente novamente.</div>');
+                    }
+                });
+            });
+    
+            // Função para carregar os livros favoritos via AJAX
+            function carregarLivrosFavoritos() {
+                // Faz a requisição para obter os livros favoritos
+                $.ajax({
+                    url: '{% url "livros_favoritos" %}', // URL para a view que retorna os livros favoritos
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            var livrosFavoritos = response.livros; // Dados dos livros recebidos
+                            var lista = $('#livrosFavoritosList');
+                            lista.empty(); // Limpa a lista antes de adicionar os itens
+    
+                            // Adiciona os livros na lista
+                            livrosFavoritos.forEach(function(livro) {
+                                lista.append('<li class="list-group-item">' + livro.nome + '</li>');
+                            });
+                        } else {
+                            $('#livrosFavoritosList').html('<li class="list-group-item">Nenhum livro favorito encontrado.</li>');
+                        }
+                    },
+                    error: function() {
+                        $('#livrosFavoritosList').html('<li class="list-group-item">Erro ao carregar livros favoritos.</li>');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>    

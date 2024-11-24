@@ -16,6 +16,7 @@ class User(models.Model):
     email_us = models.CharField(max_length=45)
     password_user = models.CharField(max_length=45)
 
+
     livros_favoritos = models.ManyToManyField(Books, related_name="Favoritados")
 
     class Meta:
