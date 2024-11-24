@@ -6,6 +6,9 @@ from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import LoginSerializer
 from .models import Books, User
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+
 
 class LoginView(APIView):
     def post(self, request, *args, **kwargs):
@@ -20,11 +23,6 @@ class LoginView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .models import User, Books
-
-from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
 def livros_favoritos_view(request):
