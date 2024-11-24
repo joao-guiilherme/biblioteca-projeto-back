@@ -8,30 +8,34 @@ class LoginSerializer(serializers.Serializer):
     password_user = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        # Tenta autenticar o usuário
         email_us = data.get('email_us')
         password_user = data.get('password_user')
 
-        user = authenticate(request=self.context.get('request'), email_us=email_us, password=password_user)
+        # Usar o backend de autenticação para verificar se o usuário existe
+        user = authenticate(request=self.context.get('request'), email=email_us, password=password_user)
 
         if not user:
             raise serializers.ValidationError("Usuário ou senha incorretos")
 
-        # Cria os tokens JWT
+        # Gerar o token JWT para o usuário
         refresh = RefreshToken.for_user(user)
+
+        # Obter os livros favoritos do usuário
+        livros_favoritos = self.get_user_books(user)
+
+        # Retorna os dados do login e os livros favoritos
         return {
             'access': str(refresh.access_token),
             'refresh': str(refresh),
-            'livros_favoritos': self.get_user_books(user),
+            'livros_favoritos': livros_favoritos,
         }
 
     def get_user_books(self, user):
-        """
-        Retorna os livros favoritos do usuário.
-        """
+        # Pega os livros favoritos do usuário
         livros_favoritos = user.livros_favoritos.all()
         return [
             {
+                'id_livro': books.id_livro,
                 'nome_livro': books.nome_livro,
                 'nome_autor': books.nome_autor,
             }

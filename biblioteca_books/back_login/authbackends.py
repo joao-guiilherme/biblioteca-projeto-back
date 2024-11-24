@@ -1,26 +1,30 @@
 from django.contrib.auth.backends import BaseBackend
 from .models import User
 
+from django.contrib.auth.backends import BaseBackend
+from django.contrib.auth.hashers import check_password
+from .models import User  # Importando o modelo de usuário
+
+from django.contrib.auth.backends import BaseBackend
+from django.contrib.auth.hashers import check_password
+from .models import User
+
 class EmailBackend(BaseBackend):
-    """
-    Backend personalizado para autenticar usuários com base no email_us.
-    """
+
     def authenticate(self, request, email=None, password=None, **kwargs):
         try:
-            # Verifica se o usuário existe pelo email
+            # Buscar o usuário pelo e-mail
             user = User.objects.get(email_us=email)
             
-            # Valida se a senha fornecida corresponde à senha do banco
-            if user.password_user == password:  # Substitua por hash se necessário
+            # Verificar se a senha fornecida corresponde ao hash armazenado no banco de dados
+            if user and check_password(password, user.password_user):  # Usando check_password
                 return user
         except User.DoesNotExist:
             return None
 
     def get_user(self, id_user):
-        """
-        Retorna o usuário com base no ID, ou None se ele não existir.
-        """
         try:
+            # Buscar usuário pelo ID
             return User.objects.get(pk=id_user)
         except User.DoesNotExist:
             return None

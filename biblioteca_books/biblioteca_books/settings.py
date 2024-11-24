@@ -39,7 +39,8 @@ TEMPLATES = [
 # Application definition
 
 AUTHENTICATION_BACKENDS = [
-    'back_login.authbackends.EmailBackend',  # Backend personalizado
+    'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
+    'biblioteca_books.back_login.auth.EmailBackend',  # Caminho correto para o EmailBackend
 ]
 
 INSTALLED_APPS = [
@@ -55,10 +56,14 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+
 REST_FRAMEWORK = {
-'DEFAULT_AUTHENTICATION_CLASSES': (
-    'rest_framework_simplejwt.authentication.JWTAuthentication',
-),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
 MIDDLEWARE = [
