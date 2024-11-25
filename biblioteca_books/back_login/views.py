@@ -41,5 +41,4 @@ def livros_favoritos_view(request):
         }
         for books in livros_favoritos
     ]
-
     return Response({'status': 'success', 'livros': livros}, status=200)
