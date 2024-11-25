@@ -8,6 +8,9 @@ from .serializers import LoginSerializer
 from .models import Books, User
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
+
 
 
 class LoginView(APIView):
@@ -25,13 +28,9 @@ class LoginView(APIView):
         
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Garantir que o usuário está autenticado
 def livros_favoritos_view(request):
-  
     user = request.user  # Obtém o usuário autenticado
-    if not user.is_authenticated:
-        return Response({'status': 'error', 'message': 'Usuário não autenticado.'}, status=401)
-
-    # Obter os livros favoritos do usuário
     livros_favoritos = user.livros_favoritos.all()
     livros = [
         {

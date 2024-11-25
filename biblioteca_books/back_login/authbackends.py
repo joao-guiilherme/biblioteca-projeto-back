@@ -10,7 +10,7 @@ class EmailBackend(BaseBackend):
             user = User.objects.get(email_us=email)
             
             
-            if user and check_password(password, user.password_user):  
+            if user and check_password(password, user.password):  
                 return user
         except User.DoesNotExist:
             return None

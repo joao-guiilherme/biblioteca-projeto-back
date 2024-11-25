@@ -1,18 +1,20 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import User
+from .models import User, Books
+from rest_framework import serializers
+
 
 class LoginSerializer(serializers.Serializer):
     email_us = serializers.EmailField()
-    password_user = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
 
     def validate(self, data):
         email_us = data.get('email_us')
-        password_user = data.get('password_user')
+        password = data.get('password')
 
-        
-        user = authenticate(request=self.context.get('request'), email=email_us, password=password_user)
+        # Utilizando a autenticação personalizada
+        user = authenticate(request=self.context.get('request'), email=email_us, password=password)
 
         if not user:
             raise serializers.ValidationError("Usuário ou senha incorretos")
@@ -30,14 +32,15 @@ class LoginSerializer(serializers.Serializer):
             'livros_favoritos': livros_favoritos,
         }
 
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Books
+        fields = ['id_books', 'nome_livro', 'nome_autor']
+
+
     def get_user_books(self, user):
         # Pega os livros favoritos do usuário
         livros_favoritos = user.livros_favoritos.all()
-        return [
-            {
-                'id_livro': books.id_livro,
-                'nome_livro': books.nome_livro,
-                'nome_autor': books.nome_autor,
-            }
-            for books in livros_favoritos
-        ]
+        # Retorne os livros favoritos com um formato mais adequado
+        return BookSerializer(livros_favoritos, many=True).data  # Usando um serializer
