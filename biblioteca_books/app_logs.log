@@ -15,3 +15,13 @@ INFO 2024-11-26 15:07:18,106 views Lista de livros favoritos construída com suce
 INFO 2024-11-26 15:07:18,107 basehttp "GET /api/livros_favoritos/ HTTP/1.1" 200 584
 INFO 2024-11-26 15:08:43,271 autoreload C:\Users\rosilene.lima\Desktop\biblioteca-projeto-back\biblioteca_books\back_login\views.py changed, reloading.
 INFO 2024-11-26 15:08:43,907 autoreload Watching for file changes with StatReloader
+INFO 2024-11-26 15:10:19,922 basehttp "POST /api/login/ HTTP/1.1" 200 483
+WARNING 2024-11-26 15:10:27,248 log Unauthorized: /api/login/
+WARNING 2024-11-26 15:10:27,248 basehttp "POST /api/login/ HTTP/1.1" 401 63
+INFO 2024-11-26 15:11:06,648 basehttp "POST /api/login/ HTTP/1.1" 200 483
+INFO 2024-11-26 15:11:24,805 views Iniciando visualização de livros favoritos.
+INFO 2024-11-26 15:11:24,805 views Usuário autenticado: bruno.oliv@email.com (ID: 2)
+INFO 2024-11-26 15:11:24,808 views 6 livros favoritos encontrados para o usuário.
+INFO 2024-11-26 15:11:24,808 views Lista de livros favoritos construída com sucesso.
+INFO 2024-11-26 15:11:24,808 basehttp "GET /api/livros_favoritos/ HTTP/1.1" 200 590
+INFO 2024-11-26 15:18:22,436 autoreload Watching for file changes with StatReloader
