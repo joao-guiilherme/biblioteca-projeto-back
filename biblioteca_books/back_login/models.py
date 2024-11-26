@@ -1,20 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-
+# Modelo de Livros
 class Books(models.Model):
-    id_books = models.AutoField(primary_key=True)  
-    nome_livro = models.CharField(db_column='nome_livro', max_length=45)
+    id_books = models.AutoField(primary_key=True)
+    nome_livro = models.CharField(max_length=255)
     nome_autor = models.CharField(max_length=255)
 
     class Meta:
-        managed = True
-        db_table = 'books'
+        db_table = 'books'  # Nome da tabela de livros no banco
 
-
-
-
-# Gerenciador de usuários personalizado
+# Gerenciador de Usuários Personalizado
 class UserManager(BaseUserManager):
     def create_user(self, email_us, password=None, **extra_fields):
         if not email_us:
@@ -24,27 +20,26 @@ class UserManager(BaseUserManager):
         user.set_password(password)  # Armazena a senha de forma segura
         user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, email_us, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email_us, password, **extra_fields)
 
-
+# Modelo de Usuário Personalizado
 class User(AbstractBaseUser):
-    id_user = models.AutoField(primary_key=True)  # AutoField é o tipo recomendado para chave primária
-    email_us = models.EmailField(unique=True)  # Tornar o email único
+    id_user = models.AutoField(primary_key=True)
+    email_us = models.EmailField(unique=True)
     username = models.CharField(max_length=45)
-    password = models.CharField(max_length=128)  # A senha deve ser longa o suficiente para armazenar senhas hasheadas
+    password = models.CharField(max_length=128)
 
-    user_livros_favoritos = models.ManyToManyField(Books, related_name="Favoritados")
+    # Relacionamento Many-to-Many com Books
+    livros_favoritos = models.ManyToManyField(Books, related_name='favoritados')
 
-    # Configurações do modelo de usuário
+    # Configuração de User
     USERNAME_FIELD = 'email_us'
     REQUIRED_FIELDS = ['username']
-
-    objects = UserManager()  # Usar o gerenciador de usuários personalizado
+    objects = UserManager()
 
     class Meta:
-        managed = True
-        db_table = 'user'
+        db_table = 'user'  # Nome da tabela de usuários no banco

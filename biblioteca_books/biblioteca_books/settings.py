@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'back_login',
+    'back_login',  # Certifique-se de que a app back_login está aqui
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
