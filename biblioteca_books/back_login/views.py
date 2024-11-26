@@ -6,6 +6,12 @@ from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import LoginSerializer
 from .models import Books, User
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
+
+
 
 class LoginView(APIView):
     def post(self, request, *args, **kwargs):
@@ -20,22 +26,11 @@ class LoginView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .models import User, Books
-
-from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Garantir que o usuário está autenticado
 def livros_favoritos_view(request):
-    """
-    View para retornar os livros favoritos do usuário autenticado.
-    """
     user = request.user  # Obtém o usuário autenticado
-    if not user.is_authenticated:
-        return Response({'status': 'error', 'message': 'Usuário não autenticado.'}, status=401)
-
-    # Obter os livros favoritos do usuário
     livros_favoritos = user.livros_favoritos.all()
     livros = [
         {
@@ -45,5 +40,4 @@ def livros_favoritos_view(request):
         }
         for books in livros_favoritos
     ]
-
     return Response({'status': 'success', 'livros': livros}, status=200)

@@ -1,19 +1,19 @@
 import os
 import django
+import sys
 
-# Defina o caminho correto para o arquivo settings.py
+sys.path.append(r'C:\Users\Rose\desktop\biblioteca-projeto-back\biblioteca_books')
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'biblioteca_books.settings')
 
-# Inicializa o Django
 django.setup()
 
-# Agora, você pode importar as models
-from back_login.models import User  # Importando as models corretamente
-from django.contrib.auth.models import User
+from back_login.models import User  # Certifique-se de usar o modelo de User personalizado
 
-# Obtém todos os usuários com senhas em texto simples
+# Buscar todos os usuários
 users = User.objects.all()
 
+# Atualizar a senha para hash
 for user in users:
-    user.set_password(user.password_user)  # Converte para senha hashada
+    user.set_password(user.password)  # Gera o hash da senha
     user.save()  # Salva o usuário com a senha hashada

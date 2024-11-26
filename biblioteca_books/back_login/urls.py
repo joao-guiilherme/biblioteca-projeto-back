@@ -3,6 +3,6 @@ from . import views
 from .views import LoginView, livros_favoritos_view
 
 urlpatterns = [
-    path('api/login/', LoginView.as_view(), name='login-api'),
-        path('livros_favoritos/', views.livros_favoritos_view, name='livros_favoritos'),
+    path('login/', LoginView.as_view(), name='login'),  # Mantendo a simplicidade
+    path('livros-favoritos/', livros_favoritos_view, name='livros-favoritos'),  # Alterando para um formato mais legível
 ]
