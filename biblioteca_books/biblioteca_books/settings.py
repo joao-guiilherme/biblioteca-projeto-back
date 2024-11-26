@@ -41,9 +41,8 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
-    'back_login.authbackends.EmailBackend',  # Usando o nome correto do arquivo
+    'back_login.authbackends.EmailBackend',  
 ]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'back_login',  # Certifique-se de que a app back_login está aqui
+    'back_login',  
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -103,7 +102,7 @@ CORS_ALLOW_METHODS = [
 
 
 SIMPLE_JWT = {
-    'USER_ID_FIELD': 'id_user',  # Defina corretamente o campo de ID como 'id_user'
+    'USER_ID_FIELD': 'id_user',  
     'AUTH_HEADER_TYPES': ('Bearer',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -131,8 +130,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'biblioteca_books.wsgi.application'
 
-AUTH_USER_MODEL = 'back_login.User'  # Use o modelo de User da sua app back_login
-
+AUTH_USER_MODEL = 'back_login.User'  
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -148,8 +146,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'back_login.User'  # Apontando para o modelo de usuário personalizado
-
+AUTH_USER_MODEL = 'back_login.User'  
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
