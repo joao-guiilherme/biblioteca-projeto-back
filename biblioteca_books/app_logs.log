@@ -1,0 +1,17 @@
+INFO 2024-11-26 15:06:07,185 autoreload Watching for file changes with StatReloader
+INFO 2024-11-26 15:06:12,876 basehttp "GET /api/livros_favoritos HTTP/1.1" 301 0
+INFO 2024-11-26 15:06:12,887 views Iniciando visualização de livros favoritos.
+INFO 2024-11-26 15:06:12,887 views Usuário autenticado: ana.silva@email.com (ID: 1)
+INFO 2024-11-26 15:06:12,900 views 6 livros favoritos encontrados para o usuário.
+INFO 2024-11-26 15:06:12,901 views Lista de livros favoritos construída com sucesso.
+INFO 2024-11-26 15:06:12,902 basehttp "GET /api/livros_favoritos/ HTTP/1.1" 200 584
+INFO 2024-11-26 15:07:13,997 autoreload C:\Users\rosilene.lima\Desktop\biblioteca-projeto-back\biblioteca_books\biblioteca_books\settings.py changed, reloading.
+INFO 2024-11-26 15:07:14,667 autoreload Watching for file changes with StatReloader
+INFO 2024-11-26 15:07:18,089 basehttp "GET /api/livros_favoritos HTTP/1.1" 301 0
+INFO 2024-11-26 15:07:18,102 views Iniciando visualização de livros favoritos.
+INFO 2024-11-26 15:07:18,102 views Usuário autenticado: ana.silva@email.com (ID: 1)
+INFO 2024-11-26 15:07:18,105 views 6 livros favoritos encontrados para o usuário.
+INFO 2024-11-26 15:07:18,106 views Lista de livros favoritos construída com sucesso.
+INFO 2024-11-26 15:07:18,107 basehttp "GET /api/livros_favoritos/ HTTP/1.1" 200 584
+INFO 2024-11-26 15:08:43,271 autoreload C:\Users\rosilene.lima\Desktop\biblioteca-projeto-back\biblioteca_books\back_login\views.py changed, reloading.
+INFO 2024-11-26 15:08:43,907 autoreload Watching for file changes with StatReloader

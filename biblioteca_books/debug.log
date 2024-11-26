@@ -1,0 +1,2 @@
+WARNING 2024-11-26 15:00:04,922 log Unauthorized: /api/livros_favoritos/
+WARNING 2024-11-26 15:00:04,922 basehttp "GET /api/livros_favoritos/ HTTP/1.1" 401 183

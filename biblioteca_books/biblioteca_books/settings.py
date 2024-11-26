@@ -37,7 +37,7 @@ TEMPLATES = [
 ]
 
 
-# Application definition
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
@@ -55,6 +55,48 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
 ]
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG', 
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'app_logs.log', 
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO', 
+            'propagate': True,
+        },
+        'back_login': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',  
+            'propagate': False,
+        },
+    },
+}
 
 
 REST_FRAMEWORK = {
