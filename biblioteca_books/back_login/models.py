@@ -24,7 +24,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)  # Armazena a senha de forma segura
         user.save(using=self._db)
         return user
-
+    
     def create_superuser(self, email_us, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -37,7 +37,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=45)
     password = models.CharField(max_length=128)  # A senha deve ser longa o suficiente para armazenar senhas hasheadas
 
-    livros_favoritos = models.ManyToManyField(Books, related_name="Favoritados")
+    user_livros_favoritos = models.ManyToManyField(Books, related_name="Favoritados")
 
     # Configurações do modelo de usuário
     USERNAME_FIELD = 'email_us'

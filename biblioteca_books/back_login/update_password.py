@@ -9,7 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'biblioteca_books.settings')
 django.setup()
 
 from back_login.models import User  # Certifique-se de usar o modelo de User personalizado
-
+# a
 # Buscar todos os usuários
 users = User.objects.all()
 

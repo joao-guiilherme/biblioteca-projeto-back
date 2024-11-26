@@ -28,16 +28,17 @@ class LoginView(APIView):
         
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])  # Garantir que o usuário está autenticado
+@permission_classes([IsAuthenticated])
 def livros_favoritos_view(request):
     user = request.user  # Obtém o usuário autenticado
-    livros_favoritos = user.livros_favoritos.all()
+    livros_favoritos = user.user_livros_favoritos.all()  # Acessa os livros favoritos através do relacionamento many-to-many
     livros = [
         {
-            'id_livro': books.id_livro,
-            'nome_livro': books.nome_livro,
-            'nome_autor': books.nome_autor,
+            'id_books': livro.id_books,
+            'nome_livro': livro.nome_livro,
+            'nome_autor': livro.nome_autor,
         }
-        for books in livros_favoritos
+        for livro in livros_favoritos  # Itera sobre os livros favoritados
     ]
     return Response({'status': 'success', 'livros': livros}, status=200)
+

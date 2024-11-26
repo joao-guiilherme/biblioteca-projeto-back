@@ -41,7 +41,7 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
-    'biblioteca_books.back_login.auth.EmailBackend',  # Caminho correto para o EmailBackend
+    'back_login.authbackends.EmailBackend',  # Usando o nome correto do arquivo
 ]
 
 INSTALLED_APPS = [
@@ -59,14 +59,13 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -102,7 +101,9 @@ CORS_ALLOW_METHODS = [
     "OPTIONS",
 ]
 
+
 SIMPLE_JWT = {
+    'USER_ID_FIELD': 'id_user',  # Defina corretamente o campo de ID como 'id_user'
     'AUTH_HEADER_TYPES': ('Bearer',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -130,6 +131,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'biblioteca_books.wsgi.application'
 
+AUTH_USER_MODEL = 'back_login.User'  # Use o modelo de User da sua app back_login
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

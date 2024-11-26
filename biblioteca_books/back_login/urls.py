@@ -1,8 +1,9 @@
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
-from .views import LoginView, livros_favoritos_view
 
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),  # Mantendo a simplicidade
-    path('livros-favoritos/', livros_favoritos_view, name='livros-favoritos'),  # Alterando para um formato mais legível
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Para obter o token
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Para renovar o token
+    path('livros-favoritos/', views.livros_favoritos_view, name='livros-favoritos'),
 ]

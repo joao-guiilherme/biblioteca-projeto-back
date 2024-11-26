@@ -2,7 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Books
-from rest_framework import serializers
 
 
 class LoginSerializer(serializers.Serializer):
@@ -32,15 +31,15 @@ class LoginSerializer(serializers.Serializer):
             'livros_favoritos': livros_favoritos,
         }
 
+    def get_user_books(self, user):
+        # Pega os livros favoritos do usuário
+        livros_favoritos = user.user_livros_favoritos.all()
+
+        # Usando o BookSerializer para retornar os livros favoritos com formato adequado
+        return BookSerializer(livros_favoritos, many=True).data
+
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Books
         fields = ['id_books', 'nome_livro', 'nome_autor']
-
-
-    def get_user_books(self, user):
-        # Pega os livros favoritos do usuário
-        livros_favoritos = user.livros_favoritos.all()
-        # Retorne os livros favoritos com um formato mais adequado
-        return BookSerializer(livros_favoritos, many=True).data  # Usando um serializer
