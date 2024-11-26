@@ -1,6 +1,10 @@
-Passo a passo para rodar o projeto em sua máquina:
+# Sobre o projeto
 
-Requisitos:
+Projeto proposto para aplicar os conhecimentos adquiridos em sala de aula.
+
+# Passo a passo para rodar o projeto em sua máquina:
+
+## Requisitos:
 - VSCode instalado;
 - Python instalado;
 - Clonar a pasta do projeto em sua máquina.
