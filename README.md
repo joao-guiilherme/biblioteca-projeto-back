@@ -1,9 +1,9 @@
 Passo a passo para rodar o projeto em sua máquina:
 
 Requisitos:
-- VSCode instalado
-- Python instalado
-- Clonar a pasta do projeto em sua máquina
+- VSCode instalado;
+- Python instalado;
+- Clonar a pasta do projeto em sua máquina.
 
 Passo 1: Dentro da pasta do projeto execute o comando "codes/scripts/activate" para ativar o ambiente virtual e puxar todas as configurações e bibliotecas necessárias
 
